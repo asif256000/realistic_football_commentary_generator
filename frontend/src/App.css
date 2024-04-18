@@ -1,0 +1,153 @@
+* {
+  background-color: darkslategray;
+  -webkit-text-fill-color: white;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: darkslategray;
+  color: white;
+  font-family: Arial, sans-serif; /* Use a common font for better compatibility */
+}
+
+.container {
+  display: grid;
+  width: 100%; 
+  max-width: 1500px; 
+  padding: 10px; /* Add some padding to the container */
+  height: auto; 
+  grid-template-rows: repeat(10, 10%); 
+  grid-template-columns: repeat(10, 10%); 
+}
+
+.image-container {
+  border: 5px solid white;
+  margin: 5px;
+  grid-row: 1 / 8;
+  grid-column: 1 / span 7;
+  overflow-x: auto; /* Disable horizontal scrolling */
+  white-space: nowrap; /* Prevent images from wrapping */
+  position: relative; /* Needed for child absolute positioning */
+}
+
+.image-list {
+  display: inline-flex; /* Display images in a row */
+  gap: 10px; /* Add some spacing between images */
+  /* animation: scrollImages 30s linear infinite; Adjust duration (40s) as needed */
+}
+
+/* @keyframes scrollImages {
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-100%);
+  }
+  45% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(-200%);
+  }
+  70% {
+    transform: translateX(-200%);
+  }
+  75% {
+    transform: translateX(-300%);
+  }
+  95% {
+    transform: translateX(-300%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+} */
+
+.highlight { 
+  max-height: 100%; /* Limit image height */
+  max-width: 100%; /* Limit image width */
+}
+
+.commentary {
+  border: 5px solid white;
+  margin: 5px;
+  grid-row: 1 / 8;
+  grid-column: span 3; 
+}
+
+.options {
+  border: 5px solid white;
+  margin: 5px;
+  grid-row: span 2; 
+  grid-column: 1 / span 7;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.find_games {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.years,
+.leagues,
+.games,
+.langs {
+  background-color: darkslategray;
+  color: white;
+}
+
+.game_gen,
+.commen_gen,
+.upload_button {
+  background-color: darkslategray;
+  color: white;
+  width: 100%; /* Set button width to 100% */
+}
+
+.games_list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.choose_lang {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.upload {
+  border: 5px solid white;
+  margin: 5px;
+  grid-row: span 2; /* Change grid-row to span 2 rows */
+  grid-column: span 3; /* Change grid-column to span 3 columns */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.upload_button{
+  width: 50%;
+  height: 40%;
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+      grid-template-columns: repeat(2, 50%);
+  }
+
+  .image-container,
+  .commentary,
+  .options,
+  .upload {
+      grid-column: span 2;
+  }
+}
