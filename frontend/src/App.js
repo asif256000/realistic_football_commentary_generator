@@ -12,7 +12,7 @@ import image7 from './images/_fb64efe5-6225-45df-ab45-50076e1735c5.jpg';
 
 const OpenAI = require("openai");
 const openai = new OpenAI({
-    apiKey: "api-key", 
+    //apiKey: "api-key", 
     dangerouslyAllowBrowser: true,
 });
 
@@ -28,23 +28,23 @@ const App = () => {
     };
     
     const generate_commentary = async() => {
-        console.log(stringArray); // Trigger click event on the gen_commentary button
-        try {
-            // Generate images for each text in stringArray
-            const imageUrls = await Promise.all(stringArray.map(prompt => generateImages(prompt)));
+        // console.log(stringArray); // Trigger click event on the gen_commentary button
+        // try {
+        //     // Generate images for each text in stringArray
+        //     const imageUrls = await Promise.all(stringArray.map(prompt => generateImages(prompt)));
             
-            // Append the generated images to the image_list div
-            const imageListDiv = document.querySelector(".image-list");
-            imageUrls.forEach(imageUrl => {
-                const img = document.createElement("img");
-                img.src = imageUrl;
-                img.alt = "Generated Image";
-                img.className = "highlight";
-                imageListDiv.appendChild(img);
-            });
-        } catch (error) {
-            console.error("Error generating commentary:", error);
-        }
+        //     // Append the generated images to the image_list div
+        //     const imageListDiv = document.querySelector(".image-list");
+        //     imageUrls.forEach(imageUrl => {
+        //         const img = document.createElement("img");
+        //         img.src = imageUrl;
+        //         img.alt = "Generated Image";
+        //         img.className = "highlight";
+        //         imageListDiv.appendChild(img);
+        //     });
+        // } catch (error) {
+        //     console.error("Error generating commentary:", error);
+        // }
     }
 
     // New function to handle games select dropdown change
