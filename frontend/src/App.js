@@ -1,3 +1,4 @@
+//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
 import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import './App.css'; 
@@ -12,7 +13,7 @@ import image7 from './images/_fb64efe5-6225-45df-ab45-50076e1735c5.jpg';
 
 const OpenAI = require("openai");
 const openai = new OpenAI({
-    apiKey: "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", // Replace "api-key" with your actual API key
+    apiKey: "api-key", 
     dangerouslyAllowBrowser: true,
 });
 
@@ -20,7 +21,7 @@ const App = () => {
 
     // State variables
     const [games, setGames] = useState([]);
-    const [selectedYear, setSelectedYear] = useState('2012'); // Default year
+    const [selectedYear, setSelectedYear] = useState('2012'); 
     const [stringArray, setStringArray] = useState([]);
 
     const handleYearChange = (event) => {
