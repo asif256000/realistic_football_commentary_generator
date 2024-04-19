@@ -31,28 +31,33 @@ from pydub import AudioSegment
 # import soundfile as sf
 # sf.write('background.wav', trimmed, sr) # Error in writing the trimmed file
 
+
+
 # voices = ["peter", "vicki", "darren"]
 # languages = ["en", "fr", "pt"]
 
-sound2 = AudioSegment.from_file("stadium_full.wav")
+voices = ["peter"]
+languages = ["en"]
 
-# for voice in voices:
-#     for language in languages:
-#         sound1 = AudioSegment.from_file(f"{voice}_{language}.wav")
-#         combined = sound1.overlay(sound2)
-#         combined.export(f"{voice}_{language}_combined.wav", format='wav')
+sound2 = AudioSegment.from_file("base_voice/stadium_full.wav")
+
+for voice in voices:
+    for language in languages:
+        sound1 = AudioSegment.from_file(f"{voice}_{language}.wav")
+        combined = sound1.overlay(sound2)
+        combined.export(f"{voice}_{language}_combined.wav", format='wav')
 
 
 
 
 
 
-sound1 = AudioSegment.from_file("vicki_en.wav")
+# sound1 = AudioSegment.from_file("vicki_en.wav")
 
-combined = sound1.overlay(sound2)
-combined2 = sound1.overlay(combined)
+# combined = sound1.overlay(sound2)
+# combined2 = sound1.overlay(combined)
 
-combined2.export("sample.wav", format='wav')
+# combined2.export("sample.wav", format='wav')
 
 
 
