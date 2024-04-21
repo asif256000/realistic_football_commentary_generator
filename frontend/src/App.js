@@ -10,12 +10,6 @@ import image5 from './images/_c06113d9-90c9-41ce-83a1-ea689aef4c88.jpg';
 import image6 from './images/_f6815fda-748d-4930-9fba-6418241b8417.jpg';
 import image7 from './images/_fb64efe5-6225-45df-ab45-50076e1735c5.jpg';
 
-const OpenAI = require("openai");
-// const openai = new OpenAI({
-//     apiKey: "", 
-//     dangerouslyAllowBrowser: true,
-// });
-
 const App = () => {
 
     // State variables
