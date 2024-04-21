@@ -12,7 +12,7 @@ import image7 from './images/_fb64efe5-6225-45df-ab45-50076e1735c5.jpg';
 
 const OpenAI = require("openai");
 const openai = new OpenAI({
-    //apiKey: "api-key", 
+    apiKey: "sk-proj-PXr0VLGCbYhdVZQx3wyST3BlbkFJv2UynLJwkltbsk9LMZKz", 
     dangerouslyAllowBrowser: true,
 });
 
@@ -20,7 +20,7 @@ const App = () => {
 
     // State variables
     const [games, setGames] = useState([]);
-    const [selectedYear, setSelectedYear] = useState('2012'); 
+    const [selectedYear, setSelectedYear] = useState('2012'); // Default year
     const [stringArray, setStringArray] = useState([]);
 
     const handleYearChange = (event) => {
@@ -28,23 +28,28 @@ const App = () => {
     };
     
     const generate_commentary = async() => {
-        // console.log(stringArray); // Trigger click event on the gen_commentary button
-        // try {
-        //     // Generate images for each text in stringArray
-        //     const imageUrls = await Promise.all(stringArray.map(prompt => generateImages(prompt)));
+        console.log(stringArray); // Trigger click event on the gen_commentary button
+
+         const commentaryText = stringArray.join('\n');
+
+         // Update the commentary <div> with the concatenated text
+         document.querySelector(".text").innerText = commentaryText;
+        try {
+            // Generate images for each text in stringArray
+            const imageUrls = await Promise.all(stringArray.map(prompt => generateImages(prompt)));
             
-        //     // Append the generated images to the image_list div
-        //     const imageListDiv = document.querySelector(".image-list");
-        //     imageUrls.forEach(imageUrl => {
-        //         const img = document.createElement("img");
-        //         img.src = imageUrl;
-        //         img.alt = "Generated Image";
-        //         img.className = "highlight";
-        //         imageListDiv.appendChild(img);
-        //     });
-        // } catch (error) {
-        //     console.error("Error generating commentary:", error);
-        // }
+            // Append the generated images to the image_list div
+            const imageListDiv = document.querySelector(".image-list");
+            imageUrls.forEach(imageUrl => {
+                const img = document.createElement("img");
+                img.src = imageUrl;
+                img.alt = "Generated Image";
+                img.className = "highlight";
+                imageListDiv.appendChild(img);
+            });
+        } catch (error) {
+            console.error("Error generating commentary:", error);
+        }
     }
 
     // New function to handle games select dropdown change
@@ -127,45 +132,39 @@ const App = () => {
 
                 <div className="commentary">
                     <h3>Commentary</h3>
-                    <p style={{ margin: '3px' }}>
+                    <p className="text" style={{ margin: '3px' }}>
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                     </p>
                     <button className="play_audio">Play Audio</button>
                 </div>
 
                 <div className="options">
-                    <div className="find_games">
-                        <div className="year_select">
-                            <label htmlFor="years">Year:</label><br />
-                            <select name="years" id="years" className="years" onChange={handleYearChange}>
-                                <option value="2012">2012</option>
-                                <option value="2013">2013</option>
-                                <option value="2014">2014</option>
-                                <option value="2015">2015</option>
-                                <option value="2016">2016</option>
-                                <option value="2017">2017</option>
-                            </select>
-                        </div>
-
-                        <div className="league_select">
-                            <label htmlFor="leagues">League:</label><br />
-                            <select name="leagues" id="leagues" className="leagues">
-                                <option value="England">England</option>
-                                <option value="Spain">Spain</option>
-                                <option value="Italy">Italy</option>
-                                <option value="Germany">Germany</option>
-                                <option value="France">France</option>
-                            </select>
-                        </div>
-
-                        {/* <div className="gen_games">
-                            <input type="submit" value="Generate Games" className="game_gen" />
-                        </div> */}
+                    <div className="option-group">
+                        <label htmlFor="years">Year:</label>
+                        <select name="years" id="years" className="years" onChange={handleYearChange}>
+                        <option value="2012">2012</option>
+                        <option value="2013">2013</option>
+                        <option value="2014">2014</option>
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                        </select>
                     </div>
 
-                    <div className="games_list">
+                    <div className="option-group">
+                        <label htmlFor="leagues">League:</label>
+                        <select name="leagues" id="leagues" className="leagues">
+                        <option value="England">England</option>
+                        <option value="Spain">Spain</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Germany">Germany</option>
+                        <option value="France">France</option>
+                        </select>
+                    </div>
+
+                    <div className="option-group">
                         <div className="game_select">
-                            <label htmlFor="games">Games:</label><br />
+                            <label htmlFor="games">Games:</label>
                             {/* <select name="games" id="games" multiple className="games" onChange={handleYearChange}>
                             {games.map((game, index) => (
                                 <option key={index} value={game}>{game}</option>
@@ -179,23 +178,21 @@ const App = () => {
                         </div> 
                     </div>
 
-                    <div className="choose_lang">
-                        <div className="language_select">
-                            <label htmlFor="langs">Select Language:</label><br />
-                            <select name="langs" id="langs" className="langs">
-                                <option value="english">English</option>
-                                <option value="spanish">Spanish</option>
-                                <option value="french">French</option>
-                                <option value="italian">Italian</option>
-                                <option value="german">German</option>
-                            </select>
-                        </div>
-
-                        <div className="gen_commentary">
-                            <input type="submit" value="Generate Commentary" className="comment_gen" onClick={generate_commentary}/>
-                        </div>
+                    <div className="option-group">
+                        <label htmlFor="langs">Select Language:</label>
+                        <select name="langs" id="langs" className="langs">
+                        <option value="english">English</option>
+                        <option value="spanish">Spanish</option>
+                        <option value="french">French</option>
+                        <option value="italian">Italian</option>
+                        <option value="german">German</option>
+                        </select>
                     </div>
-                </div>
+
+                    <div className="option-group">
+                        <input type="submit" value="Generate Commentary" className="comment_gen" onClick={generate_commentary}/>
+                    </div>
+                    </div>
 
                 <div className="upload">
                     <label htmlFor="upload" className="upload_label">Upload Your File:</label>
