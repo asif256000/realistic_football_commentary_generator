@@ -1,37 +1,28 @@
-from TTS.api import TTS
 import inflect
 import re
+import os
+import json
+from TTS.api import TTS
 from deep_translator import GoogleTranslator
-
 
 # Commentators:
 # 1. Peter Drury
 # 2. Vicki Sparks
 # 3. Darren Fletcher
 
-
-
-# text = "That was an incredible finish by Cristiano Ronaldo!"
-
-
-
-# tts = TTS(model_name="tts_models/en/ljspeech/tacotron2-DDC")
-# tts = TTS(model_name="tts_models/multilingual/multi-dataset/xtts_v2")
-
-# tts.tts_to_file(text="That was an incredible finish by Ronaldo!")
-
-tts = TTS(model_name="tts_models/multilingual/multi-dataset/your_tts", progress_bar=False)
-
-
 # voices = ["peter", "vicki", "darren"]
 # languages = ["en", "fr", "pt"]
 
-# voices = ["peter", "vicki"]
-# languages = ["en", "fr"]
+# The file path to the resources folder
+resources_file_path = "/Users/shreyas/Workspace/VT/Capstone/realistic_football_commentary_generator/resources" 
 
-voices = ["peter"]
-languages = ["en"]
+# TTS model initialization and voices and languages supported
+tts = TTS(model_name="tts_models/multilingual/multi-dataset/your_tts", progress_bar=False)
+voices = ["peter", "vicki"]
+languages = ["en", "fr"]
 
+# Selected match ids to generate audio
+match_ids = ["G29Np7eA/", "StRC9O3T/", "2J6xgTqs/"]
 
 def replace_numbers_with_words(sentence):
     p = inflect.engine()
@@ -50,43 +41,38 @@ def replace_numbers_with_words(sentence):
     return ' '.join(words)
 
 
-parent_text = "The first half continues to be intense as Messi scores for Barcelona in the 42nd minute, putting them level with Real Madrid. The teams head into halftime with a 2-2 scoreline."
-parent_text = replace_numbers_with_words(parent_text)
-
-# portuguese_text = GoogleTranslator(source='auto', target='pt').translate(text)
-
-for voice in voices:
-    for language in languages:
-        text = GoogleTranslator(source='auto', target=language).translate(parent_text)
-         
-        if language == "fr":
-            tts.tts_to_file(text, speaker_wav=f"base_voice/{voice}_final.mp3", language="fr-fr", file_path=f"{voice}_{language}.wav")
-        # elif language == "pt":
-        #     tts.tts_to_file(text, speaker_wav=f"base_voice/{voice}_final.mp3", language="pt-br", file_path=f"{voice}_{language}.wav")
-        else:
-            tts.tts_to_file(text, speaker_wav=f"base_voice/{voice}_final.mp3", language="en", file_path=f"{voice}_{language}.wav")
-
-
+def generate_audio(match_id, paragraph_id, paragraph):
+    paragraph = replace_numbers_with_words(paragraph)
+    for voice in voices:
+        for language in languages:
+            text = GoogleTranslator(source='auto', target=language).translate(paragraph)
+            if language == "fr":
+                tts.tts_to_file(text, speaker_wav=f"{resources_file_path}/audio/base_voice/{voice}_final.mp3", 
+                                language="fr-fr", 
+                                file_path=f"{resources_file_path}/audio/final_audio/{match_id}/{voice}_{language}_{paragraph_id}.wav")
+            # elif language == "pt":
+            #     tts.tts_to_file(text, speaker_wav=f"base_voice/{voice}_final.mp3", language="pt-br", file_path=f"{voice}_{language}.wav")
+            else:
+                tts.tts_to_file(text, speaker_wav=f"{resources_file_path}/audio/base_voice/{voice}_final.mp3", 
+                                language="en", 
+                                file_path=f"{resources_file_path}/audio/final_audio/{match_id}/{voice}_{language}_{paragraph_id}.wav")
 
 
-# tts.tts_to_file(french_text, speaker_wav="peter_final.mp3", language="en", file_path="checkout.wav")
-# tts.tts_to_file(portuguese_text, speaker_wav="peter_final.mp3", language="pt-br", file_path="portuguese_try.wav")
+def get_commentary_from_file(file_path):
+    with open(f"{file_path}/generated_summaries.json", "r") as f:
+        data = json.load(f)
+    
+    for match_id in data:
+        # Only selecting some games for creating limited audio files
+        if match_id not in match_ids:
+            continue
+        if not os.path.exists(f"{resources_file_path}/audio/final_audio/{match_id[:-1]}"):
+            os.makedirs(f"{resources_file_path}/audio/final_audio/{match_id[:-1]}")
 
-
-'''
-Welcome to today's thrilling match between two Spanish giants, Real Madrid and Barcelona, at the Santiago Bernabeu Stadium. The atmosphere is electric as fans are on the edge of their seats for this highly anticipated clash.
-
-The game started with a bang as Neymar opens the scoring for Barcelona in the 7th minute with a precise shot into the top right corner, assisted by Iniesta. Real Madrid quickly responds with Benzema equalizing in the 20th minute, heading in a cross from Di Maria. Benzema becomes a key player, scoring again in the 24th minute, this time with a right-footed shot at the bottom right corner from another Di Maria cross.
-
-The first half continues to be intense as Messi scores for Barcelona in the 42nd minute, putting them level with Real Madrid. The teams head into halftime with a 2-2 scoreline.
-
-The second half sees Cristiano Ronaldo converting a penalty in the 55th minute to put Real Madrid in the lead. However, the game takes a turn when Sergio Ramos receives a red card in the 63rd minute, leaving Real Madrid with 10 men.
-
-Barcelona capitalizes on the numerical advantage, with Messi scoring his second goal from the penalty spot in the 65th minute to level the score at 3-3. The game reaches its climax when Messi completes his hat-trick in the 84th minute, putting Barcelona in the lead with a stunning goal in the top right corner.
-
-Despite a late push from Real Madrid, including a missed opportunity by Alexis Sanchez in the 90th minute, Barcelona holds on to claim a 4-3 victory in this dramatic El Clasico showdown.
-
-The away team, Barcelona, emerges victorious in a thrilling encounter, showcasing their attacking prowess and resilience. The individual brilliance of players like Messi and Iniesta proved to be decisive in securing the win, while Real Madrid will be ruing missed opportunities, especially after going down to 10 men.
-
-That's all from the Santiago Bernabeu tonight, where Barcelona takes home the bragging rights in this intense battle of Spanish giants!
-'''
+        paragraphs = data[match_id].split("\n\n")
+        for paragraph_id in range(len(paragraphs)):
+            # Slicing the match_id to get rid of the "/" at the end
+            generate_audio(match_id[:-1], paragraph_id, paragraphs[paragraph_id])
+    
+if __name__ == "__main__":
+    get_commentary_from_file(resources_file_path)
