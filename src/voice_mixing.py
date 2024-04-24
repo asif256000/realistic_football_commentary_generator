@@ -1,67 +1,16 @@
-# import wave
-# import numpy as np
-# # load two files you'd like to mix
-# fnames =["./output_eng.wav", "./stadium.wav"]
-# wavs = [wave.open(fn) for fn in fnames]
-# frames = [w.readframes(w.getnframes()) for w in wavs]
-# # here's efficient numpy conversion of the raw byte buffers
-# # '<i2' is a little-endian two-byte integer.
-# samples = [np.frombuffer(f, dtype='<i2') for f in frames]
-# samples = [samp.astype(np.float64) for samp in samples]
-# # mix as much as possible
-# n = min(map(len, samples))
-# mix = samples[0][:n] + samples[1][:n]
-# # Save the result
-# mix_wav = wave.open("./mix.wav", 'w')
-# mix_wav.setparams(wavs[0].getparams())
-# # before saving, we want to convert back to '<i2' bytes:
-# mix_wav.writeframes(mix.astype('<i2').tobytes())
-# mix_wav.close()
-
-
+import os
 from pydub import AudioSegment
-# import librosa
 
-# length_commentary = librosa.get_duration(filename='eng_try.wav')
-# print(length_commentary)
+# The file path to the resources folder
+resources_file_path = "/Users/shreyas/Workspace/VT/Capstone/realistic_football_commentary_generator/resources" 
+# Selected match ids to generate audio
+match_ids = ["G29Np7eA/", "StRC9O3T/", "2J6xgTqs/"]
+sound2 = AudioSegment.from_file(f"{resources_file_path}/audio/base_voice/stadium_full.wav")
 
-# data, sr = librosa.load("stadium_full.wav", sr=None, mono=False)
-# trimmed = librosa.util.fix_length(data, size=int(sr * length_commentary))
-# # librosa.output.write_wav("background.wav", trimmed, sr)
-# import soundfile as sf
-# sf.write('background.wav', trimmed, sr) # Error in writing the trimmed file
-
-
-
-# voices = ["peter", "vicki", "darren"]
-# languages = ["en", "fr", "pt"]
-
-voices = ["peter"]
-languages = ["en"]
-
-sound2 = AudioSegment.from_file("base_voice/stadium_full.wav")
-
-for voice in voices:
-    for language in languages:
-        sound1 = AudioSegment.from_file(f"{voice}_{language}.wav")
+for match_id in match_ids:
+    if not os.path.exists(f"{resources_file_path}/audio/combined_audio/{match_id[:-1]}"):
+        os.makedirs(f"{resources_file_path}/audio/combined_audio/{match_id[:-1]}")
+    for file in os.listdir(f"{resources_file_path}/audio/final_audio/{match_id[:-1]}"):
+        sound1 = AudioSegment.from_file(f"{resources_file_path}/audio/final_audio/{match_id[:-1]}/{file}")
         combined = sound1.overlay(sound2)
-        combined.export(f"{voice}_{language}_combined.wav", format='wav')
-
-
-
-
-
-
-# sound1 = AudioSegment.from_file("vicki_en.wav")
-
-# combined = sound1.overlay(sound2)
-# combined2 = sound1.overlay(combined)
-
-# combined2.export("sample.wav", format='wav')
-
-
-
-# sound1 = AudioSegment.from_file("portuguese_try.wav")
-
-# combined = sound1.overlay(sound2)
-# combined.export("combined_final_portuguese.wav", format='wav')
+        combined.export(f"{resources_file_path}/audio/combined_audio/{match_id[:-1]}/{file[:-4]}_combined.wav", format='wav')
