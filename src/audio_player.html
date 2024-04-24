@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Checker</title>
+</head>
+<body>
+
+    <!-- <audio controls autoplay>
+        <source src="peter_en_combined.wav" type="audio/wav">
+    </audio> -->
+
+    <p>
+        Welcome to today's thrilling match between two Spanish giants, Real Madrid and Barcelona, at the Santiago Bernabeu Stadium. The atmosphere is electric as fans are on the edge of their seats for this highly anticipated clash.
+    </p>
+
+    <!-- <audio controls autoplay>
+        <source src="peter_en_combined_2.wav" type="audio/wav">
+    </audio> -->
+
+    <p>
+        The game started with a bang as Neymar opens the scoring for Barcelona in the 7th minute with a precise shot into the top right corner, assisted by Iniesta. Real Madrid quickly responds with Benzema equalizing in the 20th minute, heading in a cross from Di Maria. Benzema becomes a key player, scoring again in the 24th minute, this time with a right-footed shot at the bottom right corner from another Di Maria cross.
+    </p>
+
+    <p>
+        The first half continues to be intense as Messi scores for Barcelona in the 42nd minute, putting them level with Real Madrid. The teams head into halftime with a 2-2 scoreline.
+    </p>
+
+    <button type="button" onclick=play() id="primary">Play Audio</button>
+
+    <script>
+        var para = document.getElementsByTagName("p");
+
+        var audio = new Audio;
+        audio.type = "audio/wav"
+
+        var index = 0;
+
+        function play() {
+            audio.src = `peter_en_combined_${index}.wav`
+            para[index].style.color = "blue"
+            audio.play()
+        }
+
+        audio.onended = function() {
+            if (index < para.length){
+                index++;
+                para[index-1].style.color = "black"
+                play()
+            }     
+        }
+
+
+    </script>
+    
+</body>
+</html>
