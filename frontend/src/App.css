@@ -44,21 +44,21 @@ body {
   flex-wrap: wrap;
   gap: 2em;
   justify-content: center; 
+  max-height: 82vh;
 }
 
 .highlight {
-  max-width: 100%;
-  height: auto; /* Ensure images resize proportionally */
+  height: 768px; /* Ensure images resize proportionally */
 }
 
 .commentary {
-  max-height: 1000px;
   background-color: white;
   overflow-y: auto;
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  height: 53vh;
 }
 
 .play_audio {
@@ -73,6 +73,22 @@ body {
 }
 
 .play_audio:hover {
+  background-color: #007bff; /* Blue background on hover */
+  color: #f0f7fb; /* Light blue text on hover */
+}
+
+.stop_audio {
+  background-color: #f0f7fb; /* Light blue background */
+  color: #007bff; /* Blue text */
+  border: 1px solid #007bff; /* Blue border */
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.stop_audio:hover {
   background-color: #007bff; /* Blue background on hover */
   color: #f0f7fb; /* Light blue text on hover */
 }

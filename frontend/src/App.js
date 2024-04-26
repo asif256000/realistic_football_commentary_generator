@@ -3,6 +3,12 @@ import Papa from 'papaparse';
 import './App.css'; 
 import data from './generated_summaries.json';
 
+// import myImage1 from './images/intergoal.jpg'
+// import myImage2 from './images/intergoal2.jpg'
+// import myImage3 from './images/intergoal3.jpg'
+// import myImage4 from './images/milangoal.jpg'
+// import myImage5 from './images/milangoal2.jpg'
+
 const OpenAI = require("openai");
 const openai = new OpenAI({
     apiKey: "", 
@@ -32,7 +38,7 @@ const App = () => {
 
     const handleEnded = () => {
         if (audioIndex < elements.length - 2) {
-          elements[audioIndex + 1].style.color = "black";  
+          elements[audioIndex].style.color = "black";  
           audioIndex = audioIndex + 1;
         //   console.log(audioIndex);
           
@@ -45,8 +51,13 @@ const App = () => {
         // console.log(elements[0]);
         audio.src = `./combined_audio/${gameID}/${voice}_${lang}_${audioIndex}_combined.wav`
         audio.play();
-        elements[audioIndex + 1].style.color = "blue";
+        elements[audioIndex].style.color = "blue";
     };
+
+    const stopAudio = () => {
+        audio.pause();
+        elements[audioIndex].style.color = "black"; 
+    }
 
     const handleLeagueChange = (event) => {
         setselectedLeague(event.target.value);
@@ -76,6 +87,8 @@ const App = () => {
         // Update the commentary <div> with the concatenated text
         document.querySelector(".text").style.display = "none";
         setParagraphs(String(summaries).split('\n\n'));
+
+        // document.querySelector(".placeholder").style.display = "none";
 
 
         //await textGen(String(summaries));
@@ -254,14 +267,37 @@ const App = () => {
                     <div className="commentary">
                         <div className="commentary-header">
                             <h3>Commentary</h3>
+                            <button className="stop_audio" onClick={stopAudio}>Stop Audio</button>
                             <button className="play_audio" onClick={handlePlay} autoPlay>Play Audio</button>
                             <audio id="audio" onEnded={handleEnded}>
                             </audio>
+                            
                         </div>
                         
-                        <p className="text" style={{ margin: '3px' }}>
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                        </p>
+                        <div className="text" style={{ margin: '3px' }}>
+                            How to use:
+                            <br></br><br></br>
+                            <strong>Select Your League: </strong>
+                            Begin by choosing your preferred football league from the “League” dropdown menu. Choose from the English, Spain, Italian, German, and French leagues.
+                            <br></br><br></br>
+                            <strong>Choose Your Language: </strong>
+                            Next, click on the “Select Language” dropdown. Pick the language in which you want to receive the audio commentary. The options are limited to English and French right now
+                            <br></br><br></br>
+                            <strong>Pick a Commentator: </strong>
+                            Now, explore the “Select Commentator” dropdown. You’ll find two commentators Peter for the male voice, and Vicki for the female voice.
+                            <br></br><br></br>
+                            <strong>Select a Game: </strong>
+                            Finally, use the dropdown to select a specific football match or game from the league you have selected. 
+                            <br></br><br></br>
+                            <strong>Generate Commentary: </strong>
+                            Once you’ve made all your selections, click on the “Generate Commentary” button to receive personalized football commentary based on your chosen attributes.
+                            <br></br><br></br>
+                            Enjoy scrolling through the generated highlight images, and click "Play Audio" to hear the summary of the game.
+                        </div>
+
+
+
+
                         {paragraphs.map((paragraph, index) => (
                             <p key={index}>{paragraph}</p>
                         ))}
@@ -272,7 +308,12 @@ const App = () => {
                 </div>
                 <div className="image-container">
                     <div className="image-list">
-                    <img src = 'https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg' alt = 'placeholder'></img>
+                        <img src = 'https://images.saatchiart.com/saatchi/855782/art/4051777/3121630-HSC00001-7.jpg' alt = 'placeholder' className='placeholder' style= {{height: "800px"}}></img>
+                        {/* <img src={myImage3} alt="Commentary Visual" className="highlight" />
+                        <img src={myImage5} alt="Commentary Visual" className="highlight" />
+                        <img src={myImage4} alt="Commentary Visual" className="highlight" />                        
+                        <img src={myImage2} alt="Commentary Visual" className="highlight" />
+                        <img src={myImage1} alt="Commentary Visual" className="highlight" />                         */}
                     </div>
                 </div>
             </div>
