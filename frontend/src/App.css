@@ -1,19 +1,10 @@
-* {
-  background-color: #ffffff; /* Light background */
-  color: #000000; /* Dark text color */
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f7fb; 
 }
 
 .title {
   max-width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
   margin: 0.5em auto;
 }
 
@@ -24,14 +15,12 @@ body {
   margin: 1.5em;
 }
 
-
 .options, .upload {
-  background-color: #fff; /* White background for sections */
-  border: 1px solid #ddd; /* Subtle border */
-  border-radius: 5px; /* Rounded corners */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  background-color: #ffffff; 
+  border: 2px solid #ddd; 
+  border-radius: 5px; 
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1); 
 }
-
 
 .options-commentary-container {
   flex: 0.7;
@@ -47,16 +36,14 @@ body {
   padding: 20px;
   overflow-y: auto;
   flex: 1;
+  background-color: white;
 }
 
 .image-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 5em;
-  justify-content: center; /* Center align images */
-  width: 60em;
-  height:0;
-  min-height:100%;
+  gap: 2em;
+  justify-content: center; 
 }
 
 .highlight {
@@ -66,6 +53,7 @@ body {
 
 .commentary {
   max-height: 1000px;
+  background-color: white;
   overflow-y: auto;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -74,19 +62,21 @@ body {
 }
 
 .play_audio {
-  background-color: #007bff; /* Blue button */
-  color: #fff; /* White text */
-  border: none;
+  background-color: #f0f7fb; /* Light blue background */
+  color: #007bff; /* Blue text */
+  border: 1px solid #007bff; /* Blue border */
   border-radius: 5px;
   padding: 10px 20px;
-  margin-top: 10px; /* Add margin to separate from other buttons */
+  margin-top: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .play_audio:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #007bff; /* Blue background on hover */
+  color: #f0f7fb; /* Light blue text on hover */
 }
+
 
 .options-1 {
   display: flex;
@@ -96,6 +86,22 @@ body {
 .generate-button {
   margin-left: auto;
   margin-right: auto;
+}
+
+.commentary-button {
+  background-color: #f0f7fb; /* Light blue background */
+  color: #007bff; /* Blue text */
+  border: 1px solid #007bff; /* Blue border */
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.commentary-button:hover {
+  background-color: #007bff; /* Blue background on hover */
+  color: #f0f7fb; /* Light blue text on hover */
 }
 
 .options {
@@ -138,17 +144,12 @@ body {
   background-color: #0056b3;
 }
 
-.options {
-  display: flex;
-  flex-wrap: wrap; /* Allow items to wrap */
-  justify-content: space-evenly;
-}
 .commentary-header {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 1em;;
- }
+  margin-bottom: 1em;
+}
 
 @media only screen and (max-width: 768px) {
   .container {

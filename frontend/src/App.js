@@ -2,14 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import './App.css'; 
 import data from './generated_summaries.json';
-import myImage from './images/_2b12a71e-43f5-45b3-bafe-cf1dca77ef70.jpg'
-import image1 from './images/_4c3303d2-4e16-4254-82b7-387b756a0834.jpg';
-import image2 from './images/_070f2f46-dd49-4fca-9e0e-4d418d0662db.jpg';
-import image3 from './images/_97ae0f6e-6dee-4682-b08c-5ee731fe3092.jpg';
-import image4 from './images/_7538ab4f-31b9-4a6b-9430-f18b05f5b5d2.jpg';
-import image5 from './images/_c06113d9-90c9-41ce-83a1-ea689aef4c88.jpg';
-import image6 from './images/_f6815fda-748d-4930-9fba-6418241b8417.jpg';
-import image7 from './images/_fb64efe5-6225-45df-ab45-50076e1735c5.jpg';
 
 const OpenAI = require("openai");
 const openai = new OpenAI({
@@ -254,8 +246,8 @@ const App = () => {
                             </div>  
                         </div>
 
-                        <div className="option-group generate-button">
-                            <input type="submit" value="Generate Commentary" className="comment_gen" onClick={generate_commentary}/>
+                        <div className="generate-button">
+                            <input type="submit" value="Generate Commentary" className="commentary-button" onClick={generate_commentary}/>
                         </div>
                     </div>
 
