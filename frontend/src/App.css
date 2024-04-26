@@ -12,7 +12,7 @@ body {
 
 .container {
   display: grid;
-  grid-template-columns: 1fr 450px; /* Adjust column widths */
+  grid-template-columns: 1fr 1000px; /* Adjust column widths */
   gap: 20px;
 }
 
@@ -29,7 +29,7 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
   overflow-y: auto;
-  max-height: 1000px;
+  height: 75vh;
 }
 
 .image-list {
@@ -45,7 +45,7 @@ body {
 }
 
 .commentary {
-  max-height: 1000px;
+  height: 75vh;
   overflow-y: auto;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -59,7 +59,7 @@ body {
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
-  margin-top: 10px; /* Add margin to separate from other buttons */
+  /* margin-top: 10px; Add margin to separate from other buttons */
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -74,7 +74,8 @@ body {
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
 }
 
 .option-group {
